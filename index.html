@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="./style.css">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+    <title>Quizz</title>
+</head>
+<body>
+    <div class="container">
+        <div class="topBar" id="topBar">
+
+    </div>
+        <div class="quizz" id="quizz">
+
+            <p class="question" id="question">How many times did u  today?</p>
+            <div>
+                <input type="radio" id="r1" name="idk" value="0" data-number='0'>
+                <label for="r1"></label>
+            </div>
+            <div>
+                <input type="radio" id="r2" name="idk" value="4" data-number='1'>
+                <label for="r2"></label>
+            </div>
+            <div>
+                <input type="radio" id="r3" name="idk" value="14"data-number='2'>
+                <label for="r3"></label>
+            </div>
+            <div>
+                <input type="radio" id="r4" name="idk" value="43"data-number='3'>
+                <label for="r4"></label>
+            </div>
+
+            <button id="submit">Try your answers ?</button>
+    </div>
+    <div class="pageLogin" id="pageLogReg">
+        <form class="login" id="pageLogin">
+            <div class="mb-3">
+                <label for="examplePseudo1" class="form-label">Pseudo</label>
+                <input type="pseudo" class="form-control" id="pseudoLogin">
+            </div>
+            
+            <div class="mb-3">
+                <label for="examplePassword1" class="form-label" id="pseudoLogin">Password</label>
+                <input type="Password" class="form-control" id="mdpLogin">
+            </div>
+            <div>
+            <input class="btn btn-primary" type="button" value="Connexion" id="btnConnectSubmit">
+            <input class="btn btn-primary" type="button" value="Inscription"id="btnRegister">
+            </div>
+        </form>
+        <form class="register hidden" id="pageRegister" action="#">
+            
+            <div class="mb-3">
+                <label for="examplePseudo1" class="form-label">Nom</label>
+                <input type="nom" class="form-control" id="nomRegister"required>
+            </div>
+            <div class="mb-3">
+                <label for="examplePseudo1" class="form-label">Prenom</label>
+                <input type="prenom" class="form-control" id="prenomRegister"required>
+            </div>
+            <div class="mb-3">
+                <label for="examplePseudo1" class="form-label">Age</label>
+                <input type="number" class="form-control" id="ageRegister"required>
+            </div>
+            <div class="mb-3">
+                <label for="examplePseudo1" class="form-label">Pseudo</label>
+                <input type="pseudo" class="form-control" id="pseudoRegister"required>
+            </div>
+            <div class="mb-3">
+                <label for="examplePseudo1" class="form-label">Mail</label>
+                <input type="email" class="form-control" id="mailRegister" placeholder="name@example.com"required>
+            </div>
+            <div class="mb-3">
+                <label for="examplePassword1" class="form-label">Password</label>
+                <input type="Password" class="form-control" id="mdpRegister"required>
+            </div>
+            <div>
+            
+            <input class="btn btn-primary" type="submit" value="Inscription"id="btnRegisterSubmit">
+            <input class="btn btn-primary" type="button" value="Connexion" id="btnConnectR">
+            </div>
+        </form>
+        
+    </div>
+    <div class="pageAjoutQ" id="pageAjoutQ">
+        <form action="#">
+        <select class="form-select" id="themeSelect"aria-label="Default select example">
+            <option selected>Séléctionnez un théme</option>
+            <option value="Animes">Animes</option>
+            <option value="Gaming">Gaming</option>
+            <option value="Cinema">Cinema</option>
+            <option value="Technologie">Technologie</option>
+          </select>
+          <div class="input-group mb-3">
+            <span class="input-group-text" id="inputGroup-sizing-default">Question ?</span>
+            <input type="text" class="form-control" id="questionAjout" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-default"required>
+          </div>
+          <div class="input-group mb-3">
+            <span class="input-group-text" id="inputGroup-sizing-default">Réponse 1</span>
+            <input type="text" class="form-control" id="repAjout1" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-default"required>
+          </div>
+          <div class="input-group mb-3">
+            <span class="input-group-text" id="inputGroup-sizing-default">Réponse 2</span>
+            <input type="text" class="form-control" id="repAjout2" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-default"required>
+          </div>
+          <div class="input-group mb-3">
+            <span class="input-group-text" id="inputGroup-sizing-default">Réponse 3</span>
+            <input type="text" class="form-control" id="repAjout3" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-default"required>
+          </div>
+          <div class="input-group mb-3">
+            <span class="input-group-text" id="inputGroup-sizing-default">Réponse 4</span>
+            <input type="text" class="form-control" id="repAjout4" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-default"required>
+          </div>
+          <div class="input-group mb-3">
+            <span class="input-group-text" id="inputGroup-sizing-default">Bonne Réponse</span>
+            <input type="number" class="form-control" id="repAjout5" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-default" min="1" max="4" required>
+          </div>
+          <input class="btn btn-primary" type="submit" value="Save"id="saveQuestion">
+          <input class="btn btn-primary" type="button" value="Load"id="loadQuestion">
+          <input class="btn btn-primary" type="button" value="Next"id="nextQuestion">
+          <input class="btn btn-primary" type="button" value="Previous"id="previousQuestion">
+        </form>
+    </div>
+</div>
+
+    </div>
+    <script src="./jscript.js"></script>
+</body>
+</html>
