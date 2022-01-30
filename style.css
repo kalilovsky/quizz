@@ -1,6 +1,78 @@
-.quizz{
-    
+.dashboard.getOut{
     display: none;
+}
+.dashboard{
+    display: block;
+    
+
+}
+.quizz.hidden{
+    display: none;
+}
+.quizz{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    border: 1px solid rgba(0, 0, 0, 0.2);
+    padding: 20px;
+    padding-bottom: 30px; 
+    border-radius: 20px;   
+    position: relative;
+}
+.quizzForm{
+    display: grid;
+    grid-template-columns: repeat(2,1fr);
+    gap: 20px;
+    margin-bottom: 30px;
+    margin-top: 20px;
+    
+}
+.quizz #pCurrentQ1{
+    position: absolute;
+    bottom: -15px;
+    
+}
+.themeChoose{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    
+}
+.themeChoose.hidden{
+    display:none;
+}
+.allBoxes{
+    display: grid;
+    grid-template-columns: repeat(2,1fr);
+    gap: 20px;
+    cursor: pointer;
+    
+}
+
+
+.themeBox{
+    height: 200px;
+    width: 200px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    transition: 0.5s;
+    border: 1px solid rgba(0, 0, 0, 0.3);
+    border-radius: 20px;
+}
+.themeBox:hover{
+    transform: scale(115%);
+}
+.themeBox .themeBoxImg {
+    font-size: 4em;
+   
+}
+.themeBox p{
+    text-transform: uppercase;
+
 }
 .container{
     display: flex;
@@ -10,13 +82,52 @@
     overflow: hidden;
 }
 .topBar{
-    display: none;
+    
     position: fixed;
     left: 0;
     top: 0;
     height: 60px;
     width: 100%;
     background-color: black;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0px 70px  ;
+    color: blanchedalmond;
+    
+}
+.topBar p{
+    position: relative;
+    padding-top :10px ;
+    cursor: pointer;
+    transition: 0.5s;
+}
+.topBar p:first-child:hover{
+    transform: scale(110%);
+}
+.myAccount{
+    position:absolute ;
+    background-color: black;
+    transition: 0.5s;
+    top : 60px;
+    left: 0;
+    width: 20vw;
+    height: calc(100vh);
+    cursor: pointer;
+
+}
+.myAccount.hidden{
+    position:absolute ;
+    background-color: black;
+    transition: 0.5s;
+    top : 60px;
+    left: -30vw;
+    width: 20vw;
+    height: calc(100vh);
+    cursor: pointer;    
+}
+.myAccountInfo{
+    padding-left: 20px;
 }
 .pageLogin{
     position: relative;
@@ -24,6 +135,9 @@
 }
 .pageLogin.toDown{
     transform: translateY(150vh);
+}
+.pageLogin.getOut{
+    display: none;
 }
 .login{
     display: flex;

@@ -10,30 +10,78 @@
 </head>
 <body>
     <div class="container">
-        <div class="topBar" id="topBar">
+     <div class="dashboard getOut" id="dashboard">   
+         <div class="topBar" id="topBar">
+            <p class="accountP" id="accountP">Mon Compte
+                <div class="myAccount hidden" id="myAccount">
+                    <p class="myAccountInfo"></p>
+                    <p class="myAccountInfo"></p>
+                    <p class="myAccountInfo"></p>
+                    <p class="myAccountInfo"></p>
+                    <p class="myAccountInfo"></p>
+                    <p class="myAccountInfo"></p>
+                </div>
+            </p>
+            <p>Se Déconnecter</p>
+            
+        </div>
+        <div class="resultPage hidden" id="resultPage">
 
-    </div>
-        <div class="quizz" id="quizz">
-
-            <p class="question" id="question">How many times did u  today?</p>
-            <div>
-                <input type="radio" id="r1" name="idk" value="0" data-number='0'>
-                <label for="r1"></label>
+        </div>
+        <div class="themeChoose" id="allBoxes">
+            <p>Choisissez le thème de votre quizz</p>
+           <div class="allBoxes" >
+            <div class="themeBox" data-value="Technologie" id="themeBoxTech">
+                <div class="themeBoxImg">
+                    <i class="fas fa-microchip"></i>
+                </div>
+                <p>Technologie</p>
             </div>
-            <div>
-                <input type="radio" id="r2" name="idk" value="4" data-number='1'>
-                <label for="r2"></label>
+            <div class="themeBox" data-value="Cinema" id="themeBoxCinema">
+                <div class="themeBoxImg">
+                    <i class="fas fa-film"></i>
+                </div>
+                <p>Cinéma</p>
             </div>
-            <div>
-                <input type="radio" id="r3" name="idk" value="14"data-number='2'>
-                <label for="r3"></label>
+            <div class="themeBox" data-value="Gaming"id="themeBoxGaming">
+                <div class="themeBoxImg">
+                    <i class="fas fa-gamepad"></i>
+                </div>
+                <p>Gaming</p>
             </div>
-            <div>
-                <input type="radio" id="r4" name="idk" value="43"data-number='3'>
-                <label for="r4"></label>
+            <div class="themeBox" data-value="Animes" id="themeBoxAnimes">
+                <div class="themeBoxImg" >
+                    <i class="fab fa-mandalorian"></i>
+                </div>
+                <p>Animés</p>
             </div>
-
-            <button id="submit">Try your answers ?</button>
+         </div>
+        </div>
+        <div class="quizz hidden" id="quizz">
+            <p class="textAnswer" id="question">How many times did u  today?</p>
+            <div class="quizzForm">
+                
+                <div>
+                    <input type="radio" class="radioAnswer" id="r1" name="idk" value="1">
+                    <label class="textAnswer" for="r1"></label>
+                </div>
+                <div>
+                    <input type="radio" id="r2" class="radioAnswer" name="idk" value="2">
+                    <label class="textAnswer" for="r2"></label>
+                </div>
+                <div>
+                    <input type="radio" id="r3" class="radioAnswer" name="idk" value="3">
+                    <label class="textAnswer" for="r3"></label>
+                </div>
+                <div>
+                    <input type="radio" id="r4" class="radioAnswer" name="idk" value="4">
+                    <label class="textAnswer" for="r4"></label>
+                </div>
+                
+            </div>
+            <input class="btn btn-primary" type="button" value="Suivant"id="btnSubmitAnswer">
+            <p id="pCurrentQ1">DEFE</p>
+        </div>
     </div>
     <div class="pageLogin" id="pageLogReg">
         <form class="login" id="pageLogin">
@@ -89,11 +137,15 @@
         <form action="#">
         <select class="form-select" id="themeSelect"aria-label="Default select example">
             <option selected>Séléctionnez un théme</option>
-            <option value="Animes">Animes</option>
+            <option value="Animés">Animes</option>
             <option value="Gaming">Gaming</option>
-            <option value="Cinema">Cinema</option>
+            <option value="Cinéma">Cinéma</option>
             <option value="Technologie">Technologie</option>
           </select>
+          <!-- <div class="input-group mb-3">
+            <span class="input-group-text" id="inputGroup-sizing-default">Thémes</span>
+            <input type="text" class="form-control" id="themeSelect" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-default"required>
+          </div> -->
           <div class="input-group mb-3">
             <span class="input-group-text" id="inputGroup-sizing-default">Question ?</span>
             <input type="text" class="form-control" id="questionAjout" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-default"required>
@@ -116,7 +168,7 @@
           </div>
           <div class="input-group mb-3">
             <span class="input-group-text" id="inputGroup-sizing-default">Bonne Réponse</span>
-            <input type="number" class="form-control" id="repAjout5" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-default" min="1" max="4" required>
+            <input type="text" class="form-control" id="repAjout5" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-default"  required>
           </div>
           <input class="btn btn-primary" type="submit" value="Save"id="saveQuestion">
           <input class="btn btn-primary" type="button" value="Load"id="loadQuestion">
@@ -128,5 +180,6 @@
 
     </div>
     <script src="./jscript.js"></script>
+    <script src="https://kit.fontawesome.com/fca1edefcc.js" crossorigin="anonymous"></script>
 </body>
 </html>
