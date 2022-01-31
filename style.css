@@ -33,6 +33,15 @@
     bottom: -15px;
     
 }
+.pageResultat.hidden{
+    display: none;
+}
+.pageResultat{
+    position: absolute;
+    display: block;
+    top : 60px;
+    right: 0px;
+}
 .themeChoose{
     display: flex;
     justify-content: center;
@@ -79,7 +88,7 @@
     justify-content: center;
     align-items: center;
     height: 100vh;
-    overflow: hidden;
+    
 }
 .topBar{
     

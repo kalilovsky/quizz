@@ -7,6 +7,7 @@ document.addEventListener('DOMContentLoaded', ()=>{
     let pageLogReg = document.getElementById("pageLogReg")
     let pageAjoutQ = document.getElementById("pageAjoutQ")
     let registerForm = document.getElementById("pageRegister")
+    let pageRes = document.getElementById("pageResultat");
     let btnRegisterSubmit = document.getElementById("btnRegisterSubmit")
     let btnConnectSubmit = document.getElementById('btnConnectSubmit')
     let btnsaveQuestion = document.getElementById("saveQuestion")
@@ -15,15 +16,16 @@ document.addEventListener('DOMContentLoaded', ()=>{
     let btnPreviousQuestion = document.getElementById("previousQuestion")
     let themeSave =[{themes: "" , q1:"",q2:"",q3:"",q4:"",q5:"",repQ:"" }]
     let themeSaveParLot =[{themes: "" , q1:"",q2:"",q3:"",q4:"",q5:"",repQ:"" }]
-    let scoreStat =[{themes: "" , q1:"",q2:"",repQ:"",score:0,date:"",pseudo:""},
-                    {themes: "" , q1:"",q2:"",repQ:"",score:0,date:"",pseudo:""},
-                    {themes: "" , q1:"",q2:"",repQ:"",score:0,date:"",pseudo:""},
-                    {themes: "" , q1:"",q2:"",repQ:"",score:0,date:"",pseudo:""}]
+    let scoreStat =[{pseudo:"",date:"",themes: "" , 
+                    q1:"",r1:"",repQ1:"",score1:0,
+                    q2:"",r2:"",repQ2:"",score2:0,
+                    q3:"",r3:"",repQ3:"",score3:0,
+                    q4:"",r4:"",repQ4:"",score4:0}]
     let scoreStatTmp =[{pseudo:"admin",date:"",themes: "" , 
                         q1:"",r1:"",repQ1:"",score1:0,
                         q2:"",r2:"",repQ2:"",score2:0,
                         q3:"",r3:"",repQ3:"",score3:0,
-                        q4:"",r4:"",repQ4:"",score4:0},]
+                        q4:"",r4:"",repQ4:"",score4:0}]
     let dateGameSessionStart;
     let user = [{nom:"",prenom:"",age:"",pseudo:"",email:"",mdp:""}]
     let userTmp = [{nom:"medjahed",prenom:"khalil",age:"37",pseudo:"admin",email:"admin@quizz.com",mdp:"admin"}]
@@ -57,7 +59,7 @@ document.addEventListener('DOMContentLoaded', ()=>{
     function init(){
         //préparer la liste de toutes les question et les mettere dans le tableau
         addAllQtoDB();
-        dbName = "MyTestDatabase133";
+        dbName = "MyTestDatabase134";
         console.log(indexedDB.databases());
         //verification de l'existance ou non de la base de données
         //si elle n'existe pas on la crée et on crée les table 'objectstore"
@@ -65,7 +67,7 @@ document.addEventListener('DOMContentLoaded', ()=>{
         //et ses statistiques
         checkBDD(dbName);
         defaultQuestionsInject("rien",true);
-        adminScoreCreate("rien",true);
+        adminScoreCreate("rien",true,scoreStatTmp[0]);
 
     }
     //Cette fonction est trés importante car elle permet de créer la base de données 
@@ -88,15 +90,15 @@ document.addEventListener('DOMContentLoaded', ()=>{
             adminUserCreate(db);
             //création uniquement de la table userscore car j'avais des erreurs que je n'ai pas
             // pu résoudre
-            adminScoreCreate(db,false);
+            adminScoreCreate(db,false,scoreStatTmp[0]);
            
         };
     }
-    function adminScoreCreate(dataBase,scoreInject){
+    function adminScoreCreate(dataBase,scoreInject,tableScore){
         if (scoreInject==false){
          //Création de la table user stat avec le pseudo comme key
-         let objectStoreUserStat = dataBase.createObjectStore("userstat", {keyPath: 'pseudo'});
-         objectStoreUserStat.createIndex("date", "date", { unique: true });
+         let objectStoreUserStat = dataBase.createObjectStore("userstat", {keyPath: 'date'});
+         objectStoreUserStat.createIndex("pseudo", "pseudo", { unique: false });
         } else if (scoreInject==true){
             //Ouverture de la base de données
             let request = window.indexedDB.open(dbName);
@@ -104,7 +106,7 @@ document.addEventListener('DOMContentLoaded', ()=>{
                 let db = event.target.result;
                 let transaction = db.transaction("userstat","readwrite");
                 let objectStore = transaction.objectStore("userstat");
-                let request = objectStore.add(scoreStatTmp[0]);
+                let request = objectStore.add(tableScore);
                 console.log("Stat du User par défaut injécté dans la base de donnée")
             
             };
@@ -214,28 +216,37 @@ document.addEventListener('DOMContentLoaded', ()=>{
             return false;
         } else {
             //enregistrer le score dans le tableau du score
-            // scoreStat[currentQ].themes = themeSaveTemp[oldQRandomNbr].themes;
-            // scoreStat[currentQ].q1 =  themeSaveTemp[oldQRandomNbr].q1;
-            // scoreStat[currentQ].q2 = txtOptBtn[i+1].innerHTML;
-            // scoreStat[currentQ].repQ = (themeSaveTemp[oldQRandomNbr].repQ+1);
+            scoreStat.pseudo = user[0].pseudo;
+            scoreStat.themes = themeSaveTemp[oldQRandomNbr].themes;
+            scoreStat.date = dateGameSessionStart;
+            scoreStat['q'+(currentQ+1)] = themeSaveTemp[oldQRandomNbr].q1;
+            scoreStat["r"+(currentQ+1)] = txtOptBtn[i+1].innerHTML;
+            scoreStat["repQ"+(currentQ+1)] = themeSaveTemp[oldQRandomNbr]['q'+(~~themeSaveTemp[oldQRandomNbr].repQ+1)];
+            // console.log(scoreStat["r"+(i+1)])
             // console.log(themeSaveTemp[oldQRandomNbr]['q'+(~~themeSaveTemp[oldQRandomNbr].repQ+1)])
-            // if (scoreStat[currentQ].q2===themeSaveTemp[oldQRandomNbr]['q'+(~~themeSaveTemp[oldQRandomNbr].repQ+1)]) {
-            //     scoreStat[currentQ].score =1
-            //     sessionScore++;
-            // } else {
-            //     scoreStat[currentQ].score = 0
-            // }
+            //Vérifier les bonnes questions et stocker le score équivalents
+             if (scoreStat["r"+(currentQ+1)]===themeSaveTemp[oldQRandomNbr]['q'+(~~themeSaveTemp[oldQRandomNbr].repQ+1)]) {
+                    scoreStat["score"+(currentQ+1)]= 1;
+                    sessionScore++;
+            } else {
+                scoreStat["score"+(currentQ+1)]= 0;
+            }
+
             //dechecker les radio buttons
             for (i=0;i< radioAnswer.length;i++){
                 radioAnswer[i].checked = false;
             }
             //enlenver la question qui a été deja posé du tableau charger de la base de données
             themeSaveTemp.splice(oldQRandomNbr,1);
-            console.log(scoreStat[currentQ]);
+            console.log(scoreStat);
         }
         // alert(i);
-        console.log(themeSaveTemp);
+        // console.log(themeSaveTemp);
     }
+    //Fonction qui permet de charger les questions selon le themes choisi
+    //et d'enlever les question déja posées, et de verfier les bonnes réponses
+    //et de sauvegarder les réponses donné la date le score .... dans le tableau de
+    // l'utilisateur        
     function loadQuestionForQuizz(thmTxt,addQtoDB){
         let request = window.indexedDB.open(addQtoDB);
         currentQ =0;
@@ -269,6 +280,30 @@ document.addEventListener('DOMContentLoaded', ()=>{
             };
             
     }
+    function loadOldScoreFromBD(addQtoDB,userPseudo){
+        let request = window.indexedDB.open(addQtoDB);
+        request.onerror = function(event) {
+            // Gestion des erreurs.
+          };
+        request.onsuccess = function(event){
+            let db = event.target.result;
+            let transaction = db.transaction("userstat");
+            let objectStore = transaction.objectStore("userstat");
+            let test1 = objectStore.index("pseudo");
+            let test = test1.getAll(userPseudo);
+            test.onsuccess = function(){
+                if (test.result){
+                scoreStatTmp = test.result;                                   
+                } else {
+                    
+                }
+            }
+            test.onerror = function() {
+                
+                
+            }
+        }
+    }
     function hideAllBoxesShowQuizz(){
        document.getElementById("allBoxes").classList.toggle("hidden");
        document.getElementById("quizz").classList.toggle("hidden");
@@ -279,13 +314,13 @@ document.addEventListener('DOMContentLoaded', ()=>{
         console.log(themeSaveTemp)
         oldQRandomNbr= qRandomNbr;
         pCurrentQ.innerHTML = (currentQ+1) +"/"+(qPerGame+1)
-        txtOptBtn[0].innerHTML = tableTheme[qRandomNbr]['q1'];
+        txtOptBtn[0].innerHTML = tableTheme[qRandomNbr].q1;
         txtOptBtn[1].innerHTML = tableTheme[qRandomNbr].q2;
         txtOptBtn[2].innerHTML = tableTheme[qRandomNbr].q3;
         txtOptBtn[3].innerHTML = tableTheme[qRandomNbr].q4;
         txtOptBtn[4].innerHTML = tableTheme[qRandomNbr].q5;
             
-        qRandomNbr = Math.floor(Math.random()*(tableTheme.length));   
+        qRandomNbr = Math.floor(Math.random()*(tableTheme.length-1));   
        
     }
     
@@ -328,39 +363,7 @@ document.addEventListener('DOMContentLoaded', ()=>{
         }
     }
     
-    function registerDB(dbNameLogin){
-        let request = window.indexedDB.open(dbNameLogin);
-        request.onerror = function(event) {
-            // Gestion des erreurs.
-            alert("erreur")
-          };
-          request.onupgradeneeded = function(event) {
-            let db = event.target.result;
-          
-            // Créer un objet de stockage qui contient les informations de nos clients.
-            
-            let objectStore = db.createObjectStore("themeSave3", {keyPath: 'q1'});
-          
-            // Créer un index pour rechercher les clients par leur nom. Nous pourrions
-            // avoir des doublons (homonymes), alors on n'utilise pas d'index unique.
-            objectStore.createIndex("themes", "themes", { unique: false });
-          
-            // Créer un index pour rechercher les clients par leur adresse courriel. Nous voulons nous
-            // assurer que deux clients n'auront pas la même, donc nous utilisons un index unique.
-            //objectStore.createIndex("email", "email", { unique: true });
-          
-            // Utiliser la transaction "oncomplete" pour être sûr que la création de l'objet de stockage
-            // est terminée avant d'ajouter des données dedans.
-            objectStore.transaction.oncomplete = function(event) {
-              // Stocker les valeurs dans le nouvel objet de stockage.
-              let customerObjectStore = db.transaction("themeSave3", "readwrite").objectStore("themeSave3");
-              
-                customerObjectStore.add(themeSave);
-              console.log("&&&&éééé")
-            }
-          };
-          
-    }
+    
     function accountConnection(){
         
         if (connected != false){
@@ -372,7 +375,24 @@ document.addEventListener('DOMContentLoaded', ()=>{
             userInfoP[2].innerHTML = "Age : "+user[0].age+"ans"
             userInfoP[3].innerHTML = "Email : "+user[0].email
             userInfoP[4].innerHTML = "Pseudo : "+user[0].pseudo
-            userInfoP[5].innerHTML = "Password : "+user[0].mdp    
+            userInfoP[5].innerHTML = "Password : "+user[0].mdp
+            userInfoP[6].innerHTML = "Historiques"  
+            //Lors du clique pour afficher l'historique verrifier que l'on est pas entrain de jouer
+            //et vérifier quel fenetre est active
+            userInfoP[6].onclick = function(){
+                console.log(document.getElementById("quizz").classList);
+                console.log(document.getElementById("quizz").classList.contains("hidden"));
+                if (!document.getElementById("quizz").classList.contains("hidden")){
+                    alert("Veuillez finir votre activités avant de voir les ancien résultats.");
+                } else if (!document.getElementById("pageResultat").classList.contains("hidden")) {
+                    
+                    pageResultatShow("scoreAllHide");
+                }else if (!document.getElementById("allBoxes").classList.contains("hidden")){
+                    document.getElementById("allBoxes").classList.toggle("hidden");
+                    pageResultatShow("scoreAll");
+                }
+            }
+            loadOldScoreFromBD(dbName,user[0].pseudo);  
             console.log(Object.values(user))                   
         }else {
 
@@ -450,8 +470,12 @@ document.addEventListener('DOMContentLoaded', ()=>{
                     showQuestions(themeSaveTemp);
                     } else{
                         //termnier le jeux et afficher et sauvegarder le résultat du game dans la base de donées
-                        alert("Jeux terminé")
+                        //alert("Jeux terminé")
                         document.getElementById("quizz").classList.toggle("hidden");
+                        
+                        //Sauvegarder le score dans la base de données
+                        adminScoreCreate("rien",true,scoreStat);
+                        pageResultatShow("scoreSession");
                     }
             } else {
                 alert("Veuillez Choisir Une Réponse SVP")
@@ -464,6 +488,76 @@ document.addEventListener('DOMContentLoaded', ()=>{
         }
 
     });
+    //afficher les résultats du jeux en cours ou des sessions précédentes.
+    function pageResultatShow(typeOfShow){
+        //Dans le cas d'un appel pour afficher le score de la session en cours 
+        if (typeOfShow === "scoreSession"){
+            pageRes.classList.toggle("hidden");
+            let p = new Object();
+            //Créer des élément P et les afficher dans la page pour afficher le résultat détaillé 
+            //de la session du jeu qui vient de se finir
+            p[0] = document.createElement("p");
+            p[1] = document.createElement("p");
+            p[0].innerHTML = "Votre score est de "+ sessionScore +"/"+ (qPerGame+1);
+            p[1].innerHTML= "Voici le résultat dez vos question en détails "
+            p[1].innerHTML+= "<br>Q1:"+scoreStat.q1 +"<br>"+ "Votre Réponses :"+scoreStat.r1+"<br>"+"La bonne Réponses :"+scoreStat.repQ1+"<br><br>"
+            p[1].innerHTML+= "Q2:"+scoreStat.q2 +"<br>"+ "Votre Réponses :"+scoreStat.r2+"<br>"+"La bonne Réponses :"+scoreStat.repQ2+"<br><br>"
+            p[1].innerHTML+= "Q3:"+scoreStat.q3 +"<br>"+ "Votre Réponses :"+scoreStat.r3+"<br>"+"La bonne Réponses :"+scoreStat.repQ3+"<br><br>"
+            p[1].innerHTML+= "Q4:"+scoreStat.q4 +"<br>"+ "Votre Réponses :"+scoreStat.r4+"<br>"+"La bonne Réponses :"+scoreStat.repQ4+"<br><br>"
+            pageRes.appendChild(p[0]);
+            pageRes.appendChild(p[1]);
+            //création du bouton retour à l'accueil
+            let homeBtn = document.createElement("input");
+            homeBtn.classList.value ="btn btn-primary";
+            homeBtn.type="button";
+            homeBtn.value="Retour à l'accueil";
+            homeBtn.id="btnResultatHome"
+            homeBtn.onclick = function(){
+                //Lors du clique sur le bouton retour à l'accueil
+                //afficher les bonnes div et remove les child de la div page resultat
+                //et supprimer le tableau des questions restantes dans le tableau des questions
+                //chargées
+                document.getElementById("allBoxes").classList.toggle("hidden");
+                pageRes.classList.toggle("hidden")
+                
+                for (i in themeSaveParLot){
+                    themeSaveParLot.splice(i,1);
+                }
+                pageRes.removeChild(homeBtn);
+                pageRes.removeChild(p[0]);
+                pageRes.removeChild(p[1]);
+            }
+            pageRes.appendChild(homeBtn);
+                  
+        }else if(typeOfShow === "scoreAll"){
+            pageRes.classList.toggle("hidden");
+            loadOldScoreFromBD(dbName, user[0].pseudo);
+            let p;
+            p = document.createElement("p");
+            p.innerHTML = ""
+            for (i in scoreStatTmp){
+                p.innerHTML += "Votre Score de la session du " + scoreStatTmp[i].date +"<br>";
+                p.innerHTML += "Thémes Choisi : "+scoreStatTmp[i].themes +"<br>";
+                p.innerHTML += "Q1:"+scoreStatTmp[i].q1 +"<br>"+ "Votre Réponses :"+scoreStatTmp[i].r1+"<br>"+"La bonne Réponses :"+scoreStatTmp[i].repQ1+"<br><br>"
+                p.innerHTML += "Q2:"+scoreStatTmp[i].q2 +"<br>"+ "Votre Réponses :"+scoreStatTmp[i].r2+"<br>"+"La bonne Réponses :"+scoreStatTmp[i].repQ2+"<br><br>"
+                p.innerHTML += "Q3:"+scoreStatTmp[i].q3 +"<br>"+ "Votre Réponses :"+scoreStatTmp[i].r3+"<br>"+"La bonne Réponses :"+scoreStatTmp[i].repQ3+"<br><br>"
+                p.innerHTML += "Q4:"+scoreStatTmp[i].q4 +"<br>"+ "Votre Réponses :"+scoreStatTmp[i].r4+"<br>"+"La bonne Réponses :"+scoreStatTmp[i].repQ4+"<br><br>"
+                p.innerHTML += "Votre score était de :" +(scoreStatTmp[i].score1 +scoreStatTmp[i].score2 +scoreStatTmp[i].score3 +scoreStatTmp[i].score4 ) +"/4 <br>"
+                pageRes.appendChild(p);
+            }
+            
+        } else if (typeOfShow ==="scoreAllHide"){
+            let p = pageRes.getElementsByTagName("p");
+            for (i in p){
+            p[i].innerHTML = "";
+            
+            }
+            pageRes.classList.toggle("hidden");
+            document.getElementById("allBoxes").classList.toggle("hidden");
+        }
+
+    }
+    
 
     btnThemeBoxTech.addEventListener("click", function(){
     loadQuestionForQuizz("Technologie",dbName);
@@ -533,11 +627,6 @@ document.addEventListener('DOMContentLoaded', ()=>{
     document.getElementById("accountP").addEventListener("click",function(){
         document.getElementById('myAccount').classList.toggle("hidden");
     });
-
-
-  
-
-
     btnRegisterSubmit.addEventListener('click',function(){
         user.nom = document.getElementById('nomRegister').value;
         user.prenom = document.getElementById('prenomRegister').value;
@@ -548,4 +637,22 @@ document.addEventListener('DOMContentLoaded', ()=>{
         //registerDB() //création de la base de données pour les utilisateurs
         ajouterUser(dbName);
     });
+    document.getElementById("disconnect").addEventListener("click",function(){
+        pageDash.classList.toggle("getOut");
+        if (!document.getElementById("resultPage").classList.contains("hidden")){
+            document.getElementById("resultPage").classList.toggle("hidden");
+        }
+        if (document.getElementById("allBoxes").classList.contains("hidden")){
+            document.getElementById("allBoxes").classList.toggle("hidden");
+        }
+        if (!document.getElementById("quizz").classList.contains("hidden")){
+            document.getElementById("quizz").classList.toggle("hidden");
+        }
+        if (!document.getElementById("pageResultat").classList.contains("hidden")){
+            document.getElementById("pageResultat").classList.toggle("hidden");
+        }
+        pageLogReg.classList.toggle("getOut");
+        connected =false;
+    })
+    
 });
