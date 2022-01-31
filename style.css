@@ -40,7 +40,7 @@
     position: absolute;
     display: block;
     top : 60px;
-    left: 290px;
+    left: 20vw;
 }
 .themeChoose{
     display: flex;

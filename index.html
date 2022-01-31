@@ -12,7 +12,7 @@
     <div class="container">
      <div class="dashboard getOut" id="dashboard">   
          <div class="topBar" id="topBar">
-            <p class="accountP" id="accountP">Mon Compte
+            <p class="accountP button" data-info="accountP">Mon Compte
                 <div class="myAccount hidden" id="myAccount">
                     <p class="myAccountInfo"></p>
                     <p class="myAccountInfo"></p>
@@ -23,7 +23,7 @@
                     <p class="myAccountInfo"></p>
                 </div>
             </p>
-            <p id="disconnect">Se Déconnecter</p>
+            <p class="button" data-info="disconnect">Se Déconnecter</p>
             
         </div>
         <div class="resultPage hidden" id="resultPage">
@@ -32,25 +32,25 @@
         <div class="themeChoose" id="allBoxes">
             <p>Choisissez le thème de votre quizz</p>
            <div class="allBoxes" >
-            <div class="themeBox" data-value="Technologie" id="themeBoxTech">
+            <div class="themeBox button" data-value="Technologie" data-info="themeBoxTech">
                 <div class="themeBoxImg">
                     <i class="fas fa-microchip"></i>
                 </div>
                 <p>Technologie</p>
             </div>
-            <div class="themeBox" data-value="Cinema" id="themeBoxCinema">
+            <div class="themeBox button" data-value="Cinema" data-info="themeBoxCinema">
                 <div class="themeBoxImg">
                     <i class="fas fa-film"></i>
                 </div>
                 <p>Cinéma</p>
             </div>
-            <div class="themeBox" data-value="Gaming"id="themeBoxGaming">
+            <div class="themeBox button" data-value="Gaming"data-info="themeBoxGaming">
                 <div class="themeBoxImg">
                     <i class="fas fa-gamepad"></i>
                 </div>
                 <p>Gaming</p>
             </div>
-            <div class="themeBox" data-value="Animes" id="themeBoxAnimes">
+            <div class="themeBox button" data-value="Animes" data-info="themeBoxAnimes">
                 <div class="themeBoxImg" >
                     <i class="fab fa-mandalorian"></i>
                 </div>
@@ -80,7 +80,7 @@
                 </div>
                 
             </div>
-            <input class="btn btn-primary" type="button" value="Suivant"id="btnSubmitAnswer">
+            <input class="btn btn-primary button" type="button" value="Suivant"data-info="btnSubmitAnswer">
             <p id="pCurrentQ1">DEFE</p>
         </div>
         <div class="pageResultat hidden" id="pageResultat">
@@ -99,8 +99,8 @@
                 <input type="Password" class="form-control" id="mdpLogin">
             </div>
             <div>
-            <input class="btn btn-primary" type="button" value="Connexion" id="btnConnectSubmit">
-            <input class="btn btn-primary" type="button" value="Inscription"id="btnRegister">
+            <input class="btn btn-primary button" type="button" value="Connexion" data-info="btnConnectSubmit">
+            <input class="btn btn-primary button" type="button" value="Inscription"data-info="btnRegister">
             </div>
         </form>
         <form class="register hidden" id="pageRegister" action="#">
@@ -126,13 +126,13 @@
                 <input type="email" class="form-control" id="mailRegister" placeholder="name@example.com"required>
             </div>
             <div class="mb-3">
-                <label for="examplePassword1" class="form-label">Password</label>
+                <label for="examplePassword1" class="form-label ">Password</label>
                 <input type="Password" class="form-control" id="mdpRegister"required>
             </div>
             <div>
             
-            <input class="btn btn-primary" type="submit" value="Inscription"id="btnRegisterSubmit">
-            <input class="btn btn-primary" type="button" value="Connexion" id="btnConnectR">
+            <input class="btn btn-primary button" type="submit" value="Inscription"data-info="btnRegisterSubmit">
+            <input class="btn btn-primary button" type="button" value="Connexion" data-info="btnConnectR">
             </div>
         </form>
         
@@ -174,15 +174,16 @@
             <span class="input-group-text" id="inputGroup-sizing-default">Bonne Réponse</span>
             <input type="text" class="form-control" id="repAjout5" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-default"  required>
           </div>
-          <input class="btn btn-primary" type="submit" value="Save"id="saveQuestion">
-          <input class="btn btn-primary" type="button" value="Load"id="loadQuestion">
-          <input class="btn btn-primary" type="button" value="Next"id="nextQuestion">
-          <input class="btn btn-primary" type="button" value="Previous"id="previousQuestion">
+          <input class="btn btn-primary button" type="submit" value="Save" data-info="saveQuestion">
+          <input class="btn btn-primary button" type="button" value="Load" data-info="loadQuestion">
+          <input class="btn btn-primary button" type="button" value="Next" data-info="nextQuestion">
+          <input class="btn btn-primary button" type="button" value="Previous" data-info="previousQuestion">
         </form>
     </div>
 </div>
 
     </div>
+    <script src="./var.js"></script>
     <script src="./jscript.js"></script>
     <script src="https://kit.fontawesome.com/fca1edefcc.js" crossorigin="anonymous"></script>
 </body>

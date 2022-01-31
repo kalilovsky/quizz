@@ -1,41 +1,18 @@
 document.addEventListener('DOMContentLoaded', ()=>{
     let optionBtn = document.getElementsByTagName("input")
     let txtOptBtn = document.getElementsByClassName("textAnswer")
-    let btnRegister = document.getElementById("btnRegister")
-    let btnConnectR = document.getElementById("btnConnectR")
     let loginForm = document.getElementById("pageLogin")
     let pageLogReg = document.getElementById("pageLogReg")
     let pageAjoutQ = document.getElementById("pageAjoutQ")
     let registerForm = document.getElementById("pageRegister")
     let pageRes = document.getElementById("pageResultat");
-    let btnRegisterSubmit = document.getElementById("btnRegisterSubmit")
-    let btnConnectSubmit = document.getElementById('btnConnectSubmit')
-    let btnsaveQuestion = document.getElementById("saveQuestion")
-    let btnLoadQuestion = document.getElementById('loadQuestion')
-    let btnNextQuestion= document.getElementById('nextQuestion')
-    let btnPreviousQuestion = document.getElementById("previousQuestion")
     let themeSave =[{themes: "" , q1:"",q2:"",q3:"",q4:"",q5:"",repQ:"" }]
     let themeSaveParLot =[{themes: "" , q1:"",q2:"",q3:"",q4:"",q5:"",repQ:"" }]
-    let scoreStat =[{pseudo:"",date:"",themes: "" , 
-                    q1:"",r1:"",repQ1:"",score1:0,
-                    q2:"",r2:"",repQ2:"",score2:0,
-                    q3:"",r3:"",repQ3:"",score3:0,
-                    q4:"",r4:"",repQ4:"",score4:0}]
-    let scoreStatTmp =[{pseudo:"admin",date:"",themes: "" , 
-                        q1:"",r1:"",repQ1:"",score1:0,
-                        q2:"",r2:"",repQ2:"",score2:0,
-                        q3:"",r3:"",repQ3:"",score3:0,
-                        q4:"",r4:"",repQ4:"",score4:0}]
     let dateGameSessionStart;
     let user = [{nom:"",prenom:"",age:"",pseudo:"",email:"",mdp:""}]
     let userTmp = [{nom:"medjahed",prenom:"khalil",age:"37",pseudo:"admin",email:"admin@quizz.com",mdp:"admin"}]
     let pageDash =document.getElementById("dashboard")
-    let btnThemeBoxTech = document.getElementById("themeBoxTech")
-    let btnSubmitAnswer = document.getElementById('btnSubmitAnswer')
     let radioAnswer = document.getElementsByClassName("radioAnswer")
-    let btnThemeBoxCinema = document.getElementById("themeBoxCinema")
-    let btnThemeBoxGaming = document.getElementById("themeBoxGaming")
-    let btnThemeBoxAnimes = document.getElementById("themeBoxAnimes")
     let pCurrentQ = document.getElementById("pCurrentQ1")
     let currentQ, sessionScore,dbName;
     const qPerGame = 3;
@@ -44,13 +21,6 @@ document.addEventListener('DOMContentLoaded', ()=>{
     let themeFocus = 0;
     let qRandomNbr = Math.floor(Math.random()*(qPerGame+1));
     let oldQRandomNbr;
-    let themesTxt = "Animés-/Animés-/Animés-/Animés-/Animés-/Animés-/Gaming-/Gaming-/Gaming-/Gaming-/Gaming-/Gaming-/Gaming-/Gaming-/Gaming-/Gaming-/Cinéma-/Cinéma-/Cinéma-/Cinéma-/Cinéma-/Cinéma-/Cinéma-/Cinéma-/Cinéma-/Cinéma-/Technologie-/Technologie-/Technologie-/Technologie-/Technologie-/Technologie-/Technologie-/Technologie-/Technologie-/Technologie"
-    let q1Txt = "Où est-ce que Kaneki décide de travailler ?-/Comment s’appelle l’auteur que Kaneki aime beaucoup ?-/Dans quel manga ou anime, le héros est un petit robot ?-/Qui est l’étudiant  qui dépasse certain héro pro ?-/Qui emmène Eren au tribunal ?-/Lors du combat final contre Buu buu , Vegeta déclare que ?-/Quelle est l'année de sortie de la Super Nintendo en France ? -/Dans quelle ville est né Altaïr, le héros du premier Assassin's Creed ?-/Comment s’appel le puissant héro de God of war ?-/De quels jeux Franklin Michael Trevor sont-ils  issus ?-/Quel studio a développé Call of Duty: Advanced Warfare ?-/Quel est le nom du créateur de Mario ?-/Quel moteur graphique utilisé dans les jeux battlefield ?-/Dans the last of us comment appelle t’on le champignon responsable de l’infection ?-/Dans Apex Legend comment se nomme le héros possédant un corbeau ?-/Quel est le studio qui a crée la licence Assassin’s Creed ?-/De quel film est issu la musique culte « Now we are free »?-/Dans le film « La Chute du Faucon noir » quel est la force d’intervention à pied ?-/Dans le film gladiator qui assassine Marc Aurèle ? -/En quel lieu Frodon se fait-il blesser par l'un des neuf cavaliers noirs ?-/A travers quel artefact possédé par Saroumane voit-on luire l'oeil de Sauron ?-/Dans intouchable, qu’elle est l’handicape de Phillipe ?-/Dans The Amazing Spiderman quel est la vraie identité d’électro ?-/Dans X men origins Wolwerine Logan se prend une explosion de quel type ?-/Comment s’ appel le méchant qui a copié la technologie Stark lors du grand prix à Monaco ?-/Dans Transformers comment appelle t’on l’élément pouvant réanimer un transformers ?-/Que veut dire High tech ?-/Que veut dire RAM ?-/Quel est le rôle d’un processeur ?-/Où se trouve le siège d’Intel Corporation ?-/Que veut dire CPL ?-/Quel est le le classement juste  des stockages les plus rapides ?-/Quel type de connexion est la plus rapide ?-/Quel débit est le plus rapide ?-/Quel est le nouveau nom de Facebook?-/Qui est le successeur de Steve Jobs ?"
-    let q2Txt = "Dans un bar.-/Takatsuki Sen-/Yume Senshi-/Lemillion-/Erwin Smith-/Goku est un imbécile-/1990-/Jérusalemen-/Credos-/Red dead rédemption 2-/Treyarch studio-/Akira Toriyama-/Unity-/Cordyceps-/Wraith-/Valve-/Gladiator-/Mac V SOG-/Spartacus-/Amon sûl-/Le miroir Galadriel-/Il est paraplégique-/Arthur Parks-/Incident industrielle-/Enton Vanko-/La Matrice de commandement-/Technologie-/Random Access Memory-/D’exécuter des fréquences d’images-/Santa Monica-/Courant porteur de liens-/HDD<SSD<SD<Flash Memory-/VDSL2-/Tera bits/s-/Méta-/Ragnar Lothbrok"
-    let q3Txt= "Dans un café appelé l’Antique.-/Tachibana Sen-/Wingman-/Endevor-/Levy-/Goku est le numéro 1-/1991-/Rome-/Démios-/The last of us-/Sledge Hammer Games-/Shigeru Miyamoto-/Unreal Engine-/Coprin-/Sombra-/Bethesda-/Star Wars-/Les Marines-/Octave-/Le mont Ventoux-/Le bâton de pouvoir-/Il est tétraplégique-/Steeve Rogers-/Une explosion-/Ivan Vanko-/Le All Spark-/La petite technologie-/Right Acces Mobile-/D’échanger des données entre les différents composants informatique-/Santa Clara-/Couverture pérméable de ligne-/Flash Memory <SD< HDD<SSD-/Modem-/Gigabyte /s-/Messenger-/Mark Zuckerberg"
-    let q4Txt= "Dans un restaurant pour Goule. -/Takatsuki Seido-/Astro Boy-/Hawks-/Hanzi Zoé-/Goku est le plus gentil des sayans-/1992-/Masyaf-/Kratos-/Grand Theft Auto 5-/Rockstar Games-/Zang Yamoto-/Rage-/Amanite Phalloïde-/Bloodhound-/Criterion-/Le seigneur des Anneaux-/La Delta Force-/Comode-/Le Gué de Bruinen-/Le Palantir-/Il est hémiplégique-/Max Dillon-/Une Explosion atomique-/Jin Khanè-/Le cube de commandement-/La haute technologie-/Rainbow Acces Memory-/De stocker des données-/Santa Barbara-/Courant porteur en ligne-/SD<SSD<Flash Memory<HDD-/ADSL-/Mégabyte/s-/Discord-/Richard Branson"
-    let q5Txt = "À l’université.-/Akira Mado-/Gundam Wing-/Stain-/Mikasa Ackerman-/Goku est son plus grand rival-/1993-/Sparte-/Sakrot-/Grand theft Auto 4-/Infinity Ward-/Dashan Wang-/Frostbite-/Lactarius Amirus-/Mirage-/Ubisoft-/Il faut sauver le soldat Rayan-/Les Spetsnaz-/Maximus-/Le mont Valérien-/Le Tesseract-/Il est polyphylétique-/Curtis Connors-/Un tir de mortier-/Raymon Barkov-/Le tesseract commandement-/La techno-/Random Admin Memory-/De centraliser la prise en charge de la RAM-/Santa Clause-/Courant paramétrable de ligne-/SSD<HDD<Flash Memory<SD-/Fibre-/Microbytes /s-/Zétaverse-/Tim Cook"
-    let repTxt= "2-/1-/3-/4-/2-/2-/2-/3-/3-/3-/2-/2-/4-/1-/3-/4-/1-/3-/3-/1-/3-/2-/3-/3-/2-/1-/3-/1-/2-/2-/3-/2-/4-/1-/1-/4"
     //lancement de l'initialisation
     if (!window.indexedDB) {
         window.alert("Votre navigateur ne supporte pas une version stable d'IndexedDB. Quelques fonctionnalités ne seront pas disponibles.")
@@ -60,7 +30,7 @@ document.addEventListener('DOMContentLoaded', ()=>{
         //préparer la liste de toutes les question et les mettere dans le tableau
         addAllQtoDB();
         dbName = "MyTestDatabase134";
-        console.log(indexedDB.databases());
+        
         //verification de l'existance ou non de la base de données
         //si elle n'existe pas on la crée et on crée les table 'objectstore"
         //de nos données qui sont les questions, les users avec un user par défaut "Admin"
@@ -238,7 +208,7 @@ document.addEventListener('DOMContentLoaded', ()=>{
             }
             //enlenver la question qui a été deja posé du tableau charger de la base de données
             themeSaveTemp.splice(oldQRandomNbr,1);
-            console.log(scoreStat);
+            
         }
         // alert(i);
         // console.log(themeSaveTemp);
@@ -307,11 +277,11 @@ document.addEventListener('DOMContentLoaded', ()=>{
     function hideAllBoxesShowQuizz(){
        document.getElementById("allBoxes").classList.toggle("hidden");
        document.getElementById("quizz").classList.toggle("hidden");
-       console.log(user);
+       
     }
     function showQuestions(tableTheme){
        
-        console.log(themeSaveTemp)
+        
         oldQRandomNbr= qRandomNbr;
         pCurrentQ.innerHTML = (currentQ+1) +"/"+(qPerGame+1)
         txtOptBtn[0].innerHTML = tableTheme[qRandomNbr].q1;
@@ -322,8 +292,7 @@ document.addEventListener('DOMContentLoaded', ()=>{
             
         qRandomNbr = Math.floor(Math.random()*(tableTheme.length-1));   
        
-    }
-    
+    }    
     function addAllQtoDB(){
         let themesTxtTmp= themesTxt.split("-/");
         let q1TxtTmp= q1Txt.split("-/");
@@ -362,8 +331,6 @@ document.addEventListener('DOMContentLoaded', ()=>{
             }
         }
     }
-    
-    
     function accountConnection(){
         
         if (connected != false){
@@ -380,8 +347,7 @@ document.addEventListener('DOMContentLoaded', ()=>{
             //Lors du clique pour afficher l'historique verrifier que l'on est pas entrain de jouer
             //et vérifier quel fenetre est active
             userInfoP[6].onclick = function(){
-                console.log(document.getElementById("quizz").classList);
-                console.log(document.getElementById("quizz").classList.contains("hidden"));
+                
                 if (!document.getElementById("quizz").classList.contains("hidden")){
                     alert("Veuillez finir votre activités avant de voir les ancien résultats.");
                 } else if (!document.getElementById("pageResultat").classList.contains("hidden")) {
@@ -393,12 +359,11 @@ document.addEventListener('DOMContentLoaded', ()=>{
                 }
             }
             loadOldScoreFromBD(dbName,user[0].pseudo);  
-            console.log(Object.values(user))                   
+                              
         }else {
 
         }
     }
-    
     function login (dbNameLogin){
         let pseudoLoginValue = document.getElementById("pseudoLogin").value
         let mdpLoginValue = document.getElementById("mdpLogin").value
@@ -450,7 +415,7 @@ document.addEventListener('DOMContentLoaded', ()=>{
             let objectStore = transaction.objectStore("users");
             let request = objectStore.add(user);
             request.onsuccess = function(event) {
-                alert("utilisateur ajouté")
+                console.log("utilisateur ajouté")
                 connected =true;
                 accountConnection();
             }
@@ -459,35 +424,6 @@ document.addEventListener('DOMContentLoaded', ()=>{
             }
         };
     }
-
-    btnSubmitAnswer.addEventListener("click",function(){
-       
-        if (currentQ <= qPerGame){
-            //vérifier qu'il y'a une réponse qui déja choisi
-            if( checkAnswerAndSave()!= false){
-                if (currentQ!=qPerGame){
-                    currentQ++;
-                    showQuestions(themeSaveTemp);
-                    } else{
-                        //termnier le jeux et afficher et sauvegarder le résultat du game dans la base de donées
-                        //alert("Jeux terminé")
-                        document.getElementById("quizz").classList.toggle("hidden");
-                        
-                        //Sauvegarder le score dans la base de données
-                        adminScoreCreate("rien",true,scoreStat);
-                        pageResultatShow("scoreSession");
-                    }
-            } else {
-                alert("Veuillez Choisir Une Réponse SVP")
-            } 
-            
-        } else {
-            //termnier le jeux et afficher et sauvegarder le résultat du game dans la base de donées
-            alert("Jeux terminé")
-            document.getElementById("quizz").classList.toggle("hidden");
-        }
-
-    });
     //afficher les résultats du jeux en cours ou des sessions précédentes.
     function pageResultatShow(typeOfShow){
         //Dans le cas d'un appel pour afficher le score de la session en cours 
@@ -558,26 +494,7 @@ document.addEventListener('DOMContentLoaded', ()=>{
             pageRes.classList.toggle("hidden");
             document.getElementById("allBoxes").classList.toggle("hidden");
         }
-
     }
-    
-
-    btnThemeBoxTech.addEventListener("click", function(){
-    loadQuestionForQuizz("Technologie",dbName);
-    });
-    btnThemeBoxCinema.addEventListener("click", function(){
-    loadQuestionForQuizz("Cinéma",dbName);
-    });
-    btnThemeBoxGaming.addEventListener("click", function(){
-    loadQuestionForQuizz("Gaming",dbName);
-    });
-    btnThemeBoxAnimes.addEventListener("click", function(){
-    loadQuestionForQuizz("Animés",dbName);
-
-    });
-    btnConnectSubmit.addEventListener("click",function(){
-        login(dbName);
-    });
     document.addEventListener("keypress", function(e){
             
         if (e.code == "Equal"){
@@ -586,76 +503,123 @@ document.addEventListener('DOMContentLoaded', ()=>{
         }
 
     });
-    btnNextQuestion.addEventListener('click',function(){
-        themeFocus++;;
-        loadQuestions(dbName);
-    });
-    btnPreviousQuestion.addEventListener('click', function(){
-        themeFocus --;
-        loadQuestions(dbName);
-    });
-    btnLoadQuestion.addEventListener('click', function(){
-        loadQuestions(dbName);
-    });
-    btnsaveQuestion.addEventListener('click', function(){
-        themeSave.themes = document.getElementById('themeSelect').value;
-        themeSave.q1 = document.getElementById('questionAjout').value;
-        themeSave.q2 = document.getElementById('repAjout1').value;
-        themeSave.q3 = document.getElementById('repAjout2').value;
-        themeSave.q4 = document.getElementById('repAjout3').value;
-        themeSave.q5 = document.getElementById('repAjout4').value;
-        themeSave.repQ = document.getElementById('repAjout5').value;
+    //gestion des evenement de click sur les bouton
+    Array.from(document.getElementsByClassName("button")).forEach(e=>{
+        e.addEventListener("click", ()=>{
+            console.log(e.dataset.info);
+            switch (e.dataset.info){
+                //bouton Connect
+                case "btnConnectSubmit":
+                    login(dbName);
+                    break;
+                case "btnRegister":
+                    loginForm.classList.toggle('hidden');
+                    registerForm.classList.toggle('hidden');
+                    break;
+                case "btnRegisterSubmit":
+                    user.nom = document.getElementById('nomRegister').value;
+                    user.prenom = document.getElementById('prenomRegister').value;
+                    user.age = document.getElementById('ageRegister').value;
+                    user.pseudo = document.getElementById('pseudoRegister').value;
+                    user.email = document.getElementById('mailRegister').value;
+                    user.mdp = document.getElementById('mdpRegister').value;
+                    
+                    ajouterUser(dbName);
+                    break;
+                case "btnConnectR":
+                    loginForm.classList.toggle('hidden');
+                    registerForm.classList.toggle('hidden');
+                    break;
+                case "saveQuestion":
+                    themeSave.themes = document.getElementById('themeSelect').value;
+                    themeSave.q1 = document.getElementById('questionAjout').value;
+                    themeSave.q2 = document.getElementById('repAjout1').value;
+                    themeSave.q3 = document.getElementById('repAjout2').value;
+                    themeSave.q4 = document.getElementById('repAjout3').value;
+                    themeSave.q5 = document.getElementById('repAjout4').value;
+                    themeSave.repQ = document.getElementById('repAjout5').value;
+                    addQtoDB()
+                    document.getElementById('themeSelect').value = "";
+                    document.getElementById('questionAjout').value = "";
+                    document.getElementById('repAjout1').value = "";
+                    document.getElementById('repAjout2').value = "";
+                    document.getElementById('repAjout3').value = "";
+                    document.getElementById('repAjout4').value = "";
+                    document.getElementById('repAjout5').value = "";
+                    break;
+                case "loadQuestion":
+                    loadQuestions(dbName);
+                    break;
+                case "nextQuestion":
+                    themeFocus++;;
+                    loadQuestions(dbName);
+                    break;
+                case "previousQuestion":
+                    themeFocus --;
+                    loadQuestions(dbName);
+                    break;
+                case "themeBoxTech":
+                    loadQuestionForQuizz("Technologie",dbName);
+                    break;
+                case "themeBoxCinema":
+                    loadQuestionForQuizz("Cinéma",dbName);
+                    break;
+                case "themeBoxGaming":
+                    loadQuestionForQuizz("Gaming",dbName);
+                    break;
+                case "themeBoxAnimes":
+                    loadQuestionForQuizz("Animés",dbName);
+                    break;
+                case "btnSubmitAnswer":
+                    if (currentQ <= qPerGame){
+                        //vérifier qu'il y'a une réponse qui déja choisi
+                        if( checkAnswerAndSave()!= false){
+                            if (currentQ!=qPerGame){
+                                currentQ++;
+                                showQuestions(themeSaveTemp);
+                                } else{
+                                    //termnier le jeux et afficher et sauvegarder le résultat du game dans la base de donées
+                                    //alert("Jeux terminé")
+                                    document.getElementById("quizz").classList.toggle("hidden");
+                                    
+                                    //Sauvegarder le score dans la base de données
+                                    adminScoreCreate("rien",true,scoreStat);
+                                    pageResultatShow("scoreSession");
+                                }
+                        } else {
+                            alert("Veuillez Choisir Une Réponse SVP")
+                        } 
+                        
+                    } else {
+                        //termnier le jeux et afficher et sauvegarder le résultat du game dans la base de donées
+                        alert("Jeux terminé")
+                        document.getElementById("quizz").classList.toggle("hidden");
+                    }
+                case "disconnect":
+                    pageDash.classList.toggle("getOut");
+                    if (!document.getElementById("resultPage").classList.contains("hidden")){
+                        document.getElementById("resultPage").classList.toggle("hidden");
+                    }
+                    if (document.getElementById("allBoxes").classList.contains("hidden")){
+                        document.getElementById("allBoxes").classList.toggle("hidden");
+                    }
+                    if (!document.getElementById("quizz").classList.contains("hidden")){
+                        document.getElementById("quizz").classList.toggle("hidden");
+                    }
+                    if (!document.getElementById("pageResultat").classList.contains("hidden")){
+                        document.getElementById("pageResultat").classList.toggle("hidden");
+                    }
+                    pageLogReg.classList.toggle("getOut");
+                    connected =false;
+                    break;
+                case "accountP":
+                    document.getElementById('myAccount').classList.toggle("hidden");
+                    break;
+                default:
+                    break;
 
-        
-        
-        addQtoDB()
-    //registerDB()
-        document.getElementById('themeSelect').value = "";
-        document.getElementById('questionAjout').value = "";
-        document.getElementById('repAjout1').value = "";
-        document.getElementById('repAjout2').value = "";
-        document.getElementById('repAjout3').value = "";
-        document.getElementById('repAjout4').value = "";
-        document.getElementById('repAjout5').value = "";
-    });
-    btnRegister.addEventListener('click',function() {
-        loginForm.classList.toggle('hidden');
-        registerForm.classList.toggle('hidden');
-    });
-    btnConnectR.addEventListener('click', function(){
-        loginForm.classList.toggle('hidden');
-        registerForm.classList.toggle('hidden');
-
-    });
-    document.getElementById("accountP").addEventListener("click",function(){
-        document.getElementById('myAccount').classList.toggle("hidden");
-    });
-    btnRegisterSubmit.addEventListener('click',function(){
-        user.nom = document.getElementById('nomRegister').value;
-        user.prenom = document.getElementById('prenomRegister').value;
-        user.age = document.getElementById('ageRegister').value;
-        user.pseudo = document.getElementById('pseudoRegister').value;
-        user.email = document.getElementById('mailRegister').value;
-        user.mdp = document.getElementById('mdpRegister').value;
-        //registerDB() //création de la base de données pour les utilisateurs
-        ajouterUser(dbName);
-    });
-    document.getElementById("disconnect").addEventListener("click",function(){
-        pageDash.classList.toggle("getOut");
-        if (!document.getElementById("resultPage").classList.contains("hidden")){
-            document.getElementById("resultPage").classList.toggle("hidden");
-        }
-        if (document.getElementById("allBoxes").classList.contains("hidden")){
-            document.getElementById("allBoxes").classList.toggle("hidden");
-        }
-        if (!document.getElementById("quizz").classList.contains("hidden")){
-            document.getElementById("quizz").classList.toggle("hidden");
-        }
-        if (!document.getElementById("pageResultat").classList.contains("hidden")){
-            document.getElementById("pageResultat").classList.toggle("hidden");
-        }
-        pageLogReg.classList.toggle("getOut");
-        connected =false;
+            }
+        })
     })
     
 });
