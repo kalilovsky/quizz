@@ -531,6 +531,9 @@ document.addEventListener('DOMContentLoaded', ()=>{
                   
         }else if(typeOfShow === "scoreAll"){
             pageRes.classList.toggle("hidden");
+            scoreStatTmp.length;
+            for (i =0; i< scoreStatTmp.length;i++)
+            {scoreStatTmp.splice(i,1);}
             loadOldScoreFromBD(dbName, user[0].pseudo);
             let p;
             p = document.createElement("p");
